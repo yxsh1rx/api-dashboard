@@ -34,13 +34,18 @@ class BeneficiaryService {
     }
   }
 
-  async getAll() {
-    const beneficiaries = await Beneficiary.find();
+  async getAll(projectId) {
+    const beneficiaries = await Beneficiary.find().where({
+      projects: projectId
+    });
     return beneficiaries;
   }
 
-  async getByUser(id) {
-    const beneficiaries = await Beneficiary.find().where({ user: id });
+  async getByUser(userId, projectId) {
+    const beneficiaries = await Beneficiary.find().where({
+      user: userId,
+      projects: projectId
+    });
     return beneficiaries;
   }
 }

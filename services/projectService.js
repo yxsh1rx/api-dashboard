@@ -6,6 +6,8 @@ class ProjectService {
     const candidate = await Project.findOne({ name });
     if (candidate) {
       throw ErrorHandler.badRequest('PROJECT_EXISTS');
+    } else if (startDate >= endDate) {
+      throw ErrorHandler.badRequest('INVALID_DATE');
     } else {
       const project = await Project.create({
         name,
@@ -18,9 +20,19 @@ class ProjectService {
       };
     }
   }
-  async getAll() {
-    const projects = await Project.find();
-    return projects;
+  async getAll(userId = null) {
+    if (userId) {
+      const projects = await Project.find({ users: userId });
+      return projects;
+    } else {
+      const projects = await Project.find();
+      return projects;
+    }
+  }
+
+  async getById(projectId, userId) {
+    const project = await Project.findById(projectId).where({ user: userId });
+    return project;
   }
 }
 

@@ -33,17 +33,18 @@ class BeneficiaryController {
 
   async getAll(req, res, next) {
     try {
-      const beneficiaries = await beneficiaryService.getAll();
-      return res.json(beneficiaries);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async getByUser(req, res, next) {
-    try {
-      const beneficiaries = await beneficiaryService.getByUser(req.params.id);
-      return res.json(beneficiaries);
+      if (req.headers.role === ('Admin' || 'Moderator')) {
+        const beneficiaries = await beneficiaryService.getAll(
+          req.headers.project
+        );
+        return res.json(beneficiaries);
+      } else {
+        const beneficiaries = await beneficiaryService.getByUser(
+          req.headers.user,
+          req.headers.project
+        );
+        return res.json(beneficiaries);
+      }
     } catch (error) {
       next(error);
     }

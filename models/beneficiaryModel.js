@@ -15,7 +15,7 @@ const BeneficiarySchema = new Schema(
     },
     status: { type: String, enum: ['Open', 'Closed'], default: 'Open' },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }]
+    projects: [{ type: Schema.Types.ObjectId, ref: 'Project', required: true }]
   },
   { timestamps: true }
 );
