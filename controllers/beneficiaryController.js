@@ -3,28 +3,9 @@ const beneficiaryService = require('../services/beneficiaryService');
 class BeneficiaryController {
   async create(req, res, next) {
     try {
-      const {
-        fullName,
-        sex,
-        dob,
-        location,
-        phone,
-        disability,
-        displacement,
-        user,
-        projects
-      } = req.body;
-      const beneficiary = await beneficiaryService.create(
-        fullName,
-        sex,
-        dob,
-        location,
-        phone,
-        disability,
-        displacement,
-        user,
-        projects
-      );
+      const beneficiaryData = req.body;
+      console.log(beneficiaryData);
+      const beneficiary = await beneficiaryService.create(beneficiaryData);
       return res.json(beneficiary);
     } catch (error) {
       next(error);
