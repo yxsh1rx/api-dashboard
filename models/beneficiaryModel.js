@@ -14,6 +14,10 @@ const BeneficiarySchema = new Schema(
       default: 'Refugee'
     },
     extraLessons: { type: Boolean, default: false },
+    visitDates: {
+      type: Array,
+      default: []
+    },
     status: { type: String, enum: ['Open', 'Closed'], default: 'Open' },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project', required: true }]

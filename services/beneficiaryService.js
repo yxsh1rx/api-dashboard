@@ -41,6 +41,17 @@ class BeneficiaryService {
     });
     return beneficiaries;
   }
+
+  async getById(id) {
+    const beneficiary = await Beneficiary.findById(id);
+    return beneficiary;
+  }
+
+  async addVisits(data) {
+    const beneficiary = await Beneficiary.findById(data.id);
+    beneficiary.visitDates = data.dates;
+    await beneficiary.save();
+  }
 }
 
 module.exports = new BeneficiaryService();
