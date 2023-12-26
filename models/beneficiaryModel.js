@@ -1,5 +1,12 @@
 const { Schema, model } = require('mongoose');
 
+const SupportSchema = new Schema(
+  {
+    support: { type: Schema.Types.ObjectId, ref: 'Support', required: true }
+  },
+  { _id: false, timestamps: true }
+);
+
 const BeneficiarySchema = new Schema(
   {
     fullName: { type: String, required: true },
@@ -14,10 +21,8 @@ const BeneficiarySchema = new Schema(
       default: 'Refugee'
     },
     extraLessons: { type: Boolean, default: false },
-    visitDates: {
-      type: Array,
-      default: []
-    },
+    support: [SupportSchema],
+    visits: [{ type: Date }],
     status: { type: String, enum: ['Open', 'Closed'], default: 'Open' },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project', required: true }]

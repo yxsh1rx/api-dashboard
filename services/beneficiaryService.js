@@ -2,24 +2,24 @@ const Beneficiary = require('../models/beneficiaryModel');
 const ErrorHandler = require('../errors/ErrorHandler');
 
 class BeneficiaryService {
-  async create(beneficiaryData) {
+  async create(data) {
     const candidate = await Beneficiary.findOne({
-      fullName: beneficiaryData.fullName,
-      dob: beneficiaryData.dob
+      fullName: data.fullName,
+      dob: data.dob
     });
     if (candidate) {
       throw ErrorHandler.badRequest('BENEFICIARY_EXISTS');
     } else {
       const beneficiary = await Beneficiary.create({
-        fullName: beneficiaryData.fullName,
-        sex: beneficiaryData.sex,
-        dob: beneficiaryData.dob,
-        location: beneficiaryData.location,
-        phone: beneficiaryData.phone,
-        disability: beneficiaryData.disability,
-        displacement: beneficiaryData.displacement,
-        user: beneficiaryData.user,
-        projects: beneficiaryData.projects
+        fullName: data.fullName,
+        sex: data.sex,
+        dob: data.dob,
+        location: data.location,
+        phone: data.phone,
+        disability: data.disability,
+        displacement: data.displacement,
+        user: data.user,
+        projects: data.projects
       });
       return {
         ...beneficiary
@@ -27,29 +27,14 @@ class BeneficiaryService {
     }
   }
 
-  async getAll(projectId) {
-    const beneficiaries = await Beneficiary.find().where({
-      projects: projectId
-    });
+  async getAll(query) {
+    const beneficiaries = await Beneficiary.find(query);
     return beneficiaries;
   }
 
-  async getByUser(userId, projectId) {
-    const beneficiaries = await Beneficiary.find().where({
-      user: userId,
-      projects: projectId
-    });
-    return beneficiaries;
-  }
-
-  async getById(id) {
-    const beneficiary = await Beneficiary.findById(id);
-    return beneficiary;
-  }
-
-  async addVisits(data) {
+  async visit(data) {
     const beneficiary = await Beneficiary.findById(data.id);
-    beneficiary.visitDates = data.dates;
+    beneficiary.visits = data.visits;
     await beneficiary.save();
   }
 }

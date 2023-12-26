@@ -7,7 +7,6 @@ class UserController {
     try {
       const validationErrors = validationResult(req);
       if (!validationErrors.isEmpty()) {
-        console.log(validationErrors.msg);
         return next(ErrorHandler.badRequest('PASSWORD_VALIDATION_FAILED'));
       }
       const { username, password, role } = req.body;
@@ -71,13 +70,12 @@ class UserController {
 
   async edit(req, res, next) {
     try {
-      const userId = req.params.id;
+      const id = req.params.id;
       const validationErrors = validationResult(req);
       if (!validationErrors.isEmpty()) {
         return next(ErrorHandler.badRequest('PASSWORD_VALIDATION_FAILED'));
       }
-      const { username, password, role } = req.body;
-      const userData = await userService.edit(userId, username, password, role);
+      const userData = await userService.edit(id, req.body);
       res.cookie('refreshToken', userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true

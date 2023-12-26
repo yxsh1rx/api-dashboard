@@ -30,7 +30,6 @@ class UserService {
   async login(username, password) {
     const user = await User.findOne({ username });
     if (!user) {
-      console.log('error handled');
       throw ErrorHandler.badRequest('INVALID_USERNAME');
     }
     const isPasswordEquals = await bcrypt.compare(password, user.password);
@@ -51,6 +50,7 @@ class UserService {
 
   async logout(refreshToken) {
     const token = await tokenService.remove(refreshToken);
+    token.message = `Logged Out`;
     return token;
   }
 
@@ -79,20 +79,20 @@ class UserService {
     return users;
   }
 
-  async edit(userId, fullName, username, password, role) {
-    const candidate = await User.findOne({ username });
+  async edit(id, data) {
+    const candidate = await User.findOne({ username: data.username });
     if (candidate) {
       throw ErrorHandler.badRequest('USER_EXISTS');
     } else {
-      const editedUser = await User.findById(userId);
+      const editedUser = await User.findById(id);
       if (!editedUser) {
         throw ErrorHandler.badRequest('USER_NOT_FOUND');
       } else {
-        const hashPassword = await bcrypt.hash(password, 3);
-        editedUser.fullName = fullName || editedUser.fullName;
-        editedUser.username = username || editedUser.username;
+        const hashPassword = await bcrypt.hash(data.password, 3);
+        editedUser.fullName = data.fullName || editedUser.fullName;
+        editedUser.username = data.username || editedUser.username;
         editedUser.password = hashPassword || editedUser.password;
-        editedUser.role = role || editedUser.role;
+        editedUser.role = data.role || editedUser.role;
 
         await editedUser.save();
 

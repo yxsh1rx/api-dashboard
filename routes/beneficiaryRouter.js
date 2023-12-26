@@ -4,8 +4,7 @@ const router = new Router();
 const authMiddleware = require('../middlewares/authMiddleware');
 
 router.post('/create', authMiddleware, beneficiaryController.create);
-router.get('/all', authMiddleware, beneficiaryController.getAll);
-router.put('/visit/add', authMiddleware, beneficiaryController.addVisits);
-router.get('/current', authMiddleware, beneficiaryController.getById);
+router.get('/list', authMiddleware, beneficiaryController.getAll);
+router.put('/visits', authMiddleware, beneficiaryController.visit);
 
 module.exports = router;

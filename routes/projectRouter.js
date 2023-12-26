@@ -4,7 +4,6 @@ const router = new Router();
 const authMiddleware = require('../middlewares/authMiddleware');
 
 router.post('/create', authMiddleware, projectController.create);
-router.get('/all', authMiddleware, projectController.getAll);
-router.get('/byId', authMiddleware, projectController.getById);
+router.get('/list', authMiddleware, projectController.getAll);
 
 module.exports = router;
