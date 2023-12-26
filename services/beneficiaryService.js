@@ -10,25 +10,18 @@ class BeneficiaryService {
     if (candidate) {
       throw ErrorHandler.badRequest('BENEFICIARY_EXISTS');
     } else {
-      const beneficiary = await Beneficiary.create({
-        fullName: data.fullName,
-        sex: data.sex,
-        dob: data.dob,
-        location: data.location,
-        phone: data.phone,
-        disability: data.disability,
-        displacement: data.displacement,
-        user: data.user,
-        projects: data.projects
-      });
+      const beneficiary = await Beneficiary.create(data);
       return {
-        ...beneficiary
+        ...beneficiary._doc
       };
     }
   }
 
   async getAll(query) {
     const beneficiaries = await Beneficiary.find(query);
+    if (beneficiaries.length === 0) {
+      throw ErrorHandler.badRequest('BENEFICIARIES_NOT_FOUND');
+    }
     return beneficiaries;
   }
 

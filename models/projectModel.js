@@ -12,7 +12,7 @@ const ProjectSchema = new Schema(
     },
     users: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }]
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 module.exports = model('Project', ProjectSchema);
