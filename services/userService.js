@@ -5,17 +5,14 @@ const ErrorHandler = require('../errors/errorHandler');
 const bcrypt = require('bcrypt');
 
 class UserService {
-  async create(username, password, role) {
-    const candidate = await User.findOne({ username });
+  async create(data) {
+    const candidate = await User.findOne({ username: data.username });
     if (candidate) {
       throw ErrorHandler.badRequest('USER_EXISTS');
     } else {
-      const hashPassword = await bcrypt.hash(password, 3);
-      const user = await User.create({
-        username,
-        password: hashPassword,
-        role
-      });
+      const hashPassword = await bcrypt.hash(data.password, 3);
+      data.password = hashPassword;
+      const user = await User.create(data);
       const userDTO = new UserDTO(user);
       const tokens = tokenService.generate({ ...userDTO });
       await tokenService.save(userDTO.id, tokens.refreshToken);

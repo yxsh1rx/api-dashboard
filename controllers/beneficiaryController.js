@@ -22,7 +22,7 @@ class BeneficiaryController {
 
   async visit(req, res, next) {
     try {
-      const beneficiary = await beneficiaryService.addVisits(req.body);
+      const beneficiary = await beneficiaryService.visit(req.body);
       return res.json(beneficiary);
     } catch (error) {
       next(error);

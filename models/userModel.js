@@ -9,9 +9,12 @@ const UserSchema = new Schema(
       enum: ['Admin', 'Moderator', 'User'],
       default: 'User'
     },
+    district: {
+      type: String
+    },
     status: { type: String, enum: ['Active', 'Deleted'], default: 'Active' }
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 module.exports = model('User', UserSchema);

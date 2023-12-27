@@ -9,8 +9,7 @@ class UserController {
       if (!validationErrors.isEmpty()) {
         return next(ErrorHandler.badRequest('PASSWORD_VALIDATION_FAILED'));
       }
-      const { username, password, role } = req.body;
-      const userData = await userService.create(username, password, role);
+      const userData = await userService.create(req.body);
       res.cookie('refreshToken', userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true

@@ -5,7 +5,7 @@ const BeneficiarySchema = new Schema(
     fullName: { type: String, required: true },
     sex: { type: String, enum: ['Male', 'Female'], required: true },
     dob: { type: Date, required: true },
-    location: { type: String, required: true },
+    location: { type: String },
     phone: { type: String },
     disability: { type: Boolean, default: false },
     displacement: {
@@ -13,6 +13,7 @@ const BeneficiarySchema = new Schema(
       enum: ['Refugee', 'Local'],
       default: 'Refugee'
     },
+    visits: { type: Array },
     support: { type: Array, default: [] },
     status: { type: String, enum: ['Open', 'Closed'], default: 'Open' },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },

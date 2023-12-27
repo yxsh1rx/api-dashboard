@@ -9,10 +9,7 @@ class TokenService {
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
       expiresIn: '30d'
     });
-    return {
-      accessToken,
-      refreshToken
-    };
+    return { accessToken, refreshToken };
   }
 
   async save(userId, refreshToken) {

@@ -19,16 +19,15 @@ class BeneficiaryService {
 
   async getAll(query) {
     const beneficiaries = await Beneficiary.find(query);
-    if (beneficiaries.length === 0) {
-      throw ErrorHandler.badRequest('BENEFICIARIES_NOT_FOUND');
-    }
     return beneficiaries;
   }
 
   async visit(data) {
-    const beneficiary = await Beneficiary.findById(data.id);
+    const beneficiary = await Beneficiary.findById(data._id);
     beneficiary.visits = data.visits;
+    console.log(data);
     await beneficiary.save();
+    return beneficiary;
   }
 }
 

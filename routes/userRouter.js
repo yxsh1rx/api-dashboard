@@ -14,7 +14,7 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 router.get('/refresh', userController.refresh);
 router.get(
-  '/all/',
+  '/list',
   authMiddleware,
   permissionMiddleware.checkPermissions('Admin'),
   userController.getAll
