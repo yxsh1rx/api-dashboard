@@ -86,7 +86,7 @@ class UserService {
         throw ErrorHandler.badRequest('USER_NOT_FOUND');
       } else {
         const hashPassword = await bcrypt.hash(data.password, 3);
-        editedUser.fullName = data.fullName || editedUser.fullName;
+        // editedUser.fullName = data.fullName || editedUser.fullName;
         editedUser.username = data.username || editedUser.username;
         editedUser.password = hashPassword || editedUser.password;
         editedUser.role = data.role || editedUser.role;

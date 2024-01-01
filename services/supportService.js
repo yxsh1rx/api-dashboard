@@ -1,22 +1,28 @@
-const Support = require('../models/supportModel');
 const ErrorHandler = require('../errors/ErrorHandler');
+const Support = require('../models/supportModel');
 
 class SupportService {
-  async create(data) {
-    const support = await Support.findOne({
-      name: data.name
-    });
-    if (support) {
+  async create(name, project) {
+    const candidate = await Support.findOne({ name });
+    if (candidate) {
       throw ErrorHandler.badRequest('SUPPORT_EXISTS');
     } else {
       const support = await Support.create({
-        name: data.name,
-        project: data.project
+        name,
+        project
       });
       return {
-        ...support
+        ...support._doc
       };
     }
+  }
+
+  async getAll(query) {
+    const supportList = await Support.find(query);
+    if (supportList.length === 0) {
+      throw ErrorHandler.badRequest('SUPPORT_NOT_FOUND');
+    }
+    return supportList;
   }
 }
 
