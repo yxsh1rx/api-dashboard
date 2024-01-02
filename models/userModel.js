@@ -4,13 +4,12 @@ const UserSchema = new Schema(
   {
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    fullName: { type: String, required: false },
+    location: { type: Array, default: [] },
     role: {
       type: String,
       enum: ['Admin', 'Moderator', 'User'],
       default: 'User'
-    },
-    district: {
-      type: String
     },
     status: { type: String, enum: ['Active', 'Deleted'], default: 'Active' }
   },

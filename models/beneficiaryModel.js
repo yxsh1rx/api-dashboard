@@ -8,18 +8,13 @@ const BeneficiarySchema = new Schema(
     location: { type: String },
     phone: { type: String },
     disability: { type: Boolean, default: false },
-    displacement: {
+    disaggregation: {
       type: String,
       enum: ['Refugee', 'Local'],
       default: 'Refugee'
     },
-    visits: { type: Array },
     support: { type: Array, default: [] },
-    extra: {
-      type: Boolean,
-      default: false
-    },
-    status: { type: String, enum: ['Open', 'Closed'], default: 'Open' },
+    status: { type: String, enum: ['Active', 'Archived'], default: 'Active' },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }]
   },
