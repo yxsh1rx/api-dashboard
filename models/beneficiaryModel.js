@@ -15,6 +15,10 @@ const BeneficiarySchema = new Schema(
     },
     visits: { type: Array },
     support: { type: Array, default: [] },
+    extra: {
+      type: Boolean,
+      default: false
+    },
     status: { type: String, enum: ['Open', 'Closed'], default: 'Open' },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }]

@@ -1,6 +1,5 @@
 const Beneficiary = require('../models/beneficiaryModel');
 const ErrorHandler = require('../errors/ErrorHandler');
-const { ObjectId } = require('mongodb');
 
 class BeneficiaryService {
   async create(data) {
@@ -49,11 +48,17 @@ class BeneficiaryService {
     return beneficiary;
   }
 
+  async extra(_id, state) {
+    const beneficiary = await Beneficiary.findById({ _id });
+    beneficiary.extra = state;
+    await beneficiary.save();
+    return beneficiary;
+  }
+
   async support(_id, data) {
     const beneficiary = await Beneficiary.findById({ _id });
     beneficiary.support.push(data);
     await beneficiary.save();
-    console.log(beneficiary);
     return beneficiary;
   }
 }
