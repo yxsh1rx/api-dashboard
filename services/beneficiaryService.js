@@ -28,7 +28,8 @@ class BeneficiaryService {
       beneficiary.location = data.location || beneficiary.location;
       beneficiary.phone = data.phone || beneficiary.phone;
       beneficiary.disability = data.disability || beneficiary.disability;
-      beneficiary.displacement = data.displacement || beneficiary.displacement;
+      beneficiary.disaggregation =
+        data.disaggregation || beneficiary.disaggregation;
 
       await beneficiary.save();
 
@@ -41,25 +42,20 @@ class BeneficiaryService {
     return beneficiaries;
   }
 
-  async visit(data) {
-    const beneficiary = await Beneficiary.findById(data._id);
-    beneficiary.visits = data.visits;
-    await beneficiary.save();
-    return beneficiary;
-  }
-
-  async extra(_id, state) {
-    const beneficiary = await Beneficiary.findById({ _id });
-    beneficiary.extra = state;
-    await beneficiary.save();
-    return beneficiary;
-  }
-
   async support(_id, data) {
-    const beneficiary = await Beneficiary.findById({ _id });
-    beneficiary.support.push(data);
-    await beneficiary.save();
-    return beneficiary;
+    const beneficiary = await Beneficiary.findById(_id);
+    const support = beneficiary.support.find((item) => item.name === data.name);
+    if (support) {
+      support.dates = data.dates;
+    } else {
+      beneficiary.support.push(data);
+    }
+
+    const response = await Beneficiary.updateOne(
+      { _id },
+      { $set: { support: beneficiary.support } }
+    );
+    return response;
   }
 }
 

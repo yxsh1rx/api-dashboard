@@ -13,7 +13,7 @@ const BeneficiarySchema = new Schema(
       enum: ['Refugee', 'Local'],
       default: 'Refugee'
     },
-    support: { type: Array, default: [] },
+    support: { type: Array },
     status: { type: String, enum: ['Active', 'Archived'], default: 'Active' },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }]

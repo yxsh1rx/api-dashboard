@@ -30,27 +30,6 @@ class BeneficiaryController {
     }
   }
 
-  async visit(req, res, next) {
-    try {
-      const beneficiary = await beneficiaryService.visit(req.body);
-      return res.json(beneficiary);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async extra(req, res, next) {
-    try {
-      const beneficiary = await beneficiaryService.extra(
-        req.params.id,
-        req.body.state
-      );
-      return res.json(beneficiary);
-    } catch (error) {
-      next(error);
-    }
-  }
-
   async support(req, res, next) {
     try {
       const beneficiary = await beneficiaryService.support(

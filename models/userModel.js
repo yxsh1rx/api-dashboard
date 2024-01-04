@@ -4,8 +4,8 @@ const UserSchema = new Schema(
   {
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    fullName: { type: String, required: false },
-    location: { type: Array, default: [] },
+    fullName: { type: String, required: true },
+    locations: { type: Array },
     role: {
       type: String,
       enum: ['Admin', 'Moderator', 'User'],

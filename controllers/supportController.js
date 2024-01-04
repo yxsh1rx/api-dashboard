@@ -4,6 +4,7 @@ class SupportController {
     try {
       const support = await supportService.create(
         req.body.name,
+        req.body.permissions,
         req.body.project
       );
       return res.json(support);
