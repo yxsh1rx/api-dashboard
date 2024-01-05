@@ -2,9 +2,18 @@ const { Schema, model } = require('mongoose');
 
 const BeneficiarySchema = new Schema(
   {
-    fullName: { type: String, required: true },
+    name: {
+      first: {
+        type: String,
+        required: true
+      },
+      last: {
+        type: String,
+        required: true
+      }
+    },
     sex: { type: String, enum: ['Male', 'Female'], required: true },
-    dob: { type: Date, required: true },
+    birthdate: { type: Date, required: true },
     location: { type: String },
     phone: { type: String },
     disability: { type: Boolean, default: false },

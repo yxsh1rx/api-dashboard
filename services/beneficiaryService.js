@@ -3,13 +3,21 @@ const ErrorHandler = require('../errors/ErrorHandler');
 
 class BeneficiaryService {
   async create(data) {
+    // Проверяем на наличие бенефициара с таким именем и датой рождения в БД
     const candidate = await Beneficiary.findOne({
-      fullName: data.fullName,
-      dob: data.dob
+      name: data.name,
+      birthdate: data.birthdate
     });
+    // Если такой бенефициар найден, то проверяем находится ли среди его проектов хотя бы один, который принадлежит текущему кандидату
     if (candidate) {
-      throw ErrorHandler.badRequest('BENEFICIARY_EXISTS');
+      if (candidate.projects.includes(data.projects[0])) {
+        // Если такой проект уже есть - пробрасываем ошибку о дубликате
+        throw ErrorHandler.badRequest('BENEFICIARY_EXISTS');
+      } else {
+        // Если такого проекта нет - редактируем бенефициара и добавляем ему проект
+      }
     } else {
+      // Если бенефициар не найден, то создаём новую запись в БД
       const beneficiary = await Beneficiary.create(data);
       return {
         ...beneficiary._doc
