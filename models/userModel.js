@@ -4,16 +4,7 @@ const UserSchema = new Schema(
   {
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    name: {
-      first: {
-        type: String,
-        required: true
-      },
-      last: {
-        type: String,
-        required: true
-      }
-    },
+    fullName: { type: String },
     areas: { type: Array },
     role: {
       type: String,

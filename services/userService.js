@@ -15,7 +15,7 @@ class UserService {
       const user = await User.create(data);
       const userDTO = new UserDTO(user);
       const tokens = tokenService.generate({ ...userDTO });
-      await tokenService.save(userDTO.id, tokens.refreshToken);
+      await tokenService.save(userDTO._id, tokens.refreshToken);
 
       return {
         ...tokens,
@@ -38,7 +38,7 @@ class UserService {
     }
     const userDTO = new UserDTO(user);
     const tokens = tokenService.generate({ ...userDTO });
-    await tokenService.save(userDTO.id, tokens.refreshToken);
+    await tokenService.save(userDTO._id, tokens.refreshToken);
     return {
       ...tokens,
       user: userDTO
@@ -67,7 +67,7 @@ class UserService {
     const user = await User.findById(userData.id);
     const userDTO = new UserDTO(user);
     const tokens = tokenService.generate({ ...userDTO });
-    await tokenService.save(userDTO.id, tokens.refreshToken);
+    await tokenService.save(userDTO._id, tokens.refreshToken);
     return { ...tokens, user: userDTO };
   }
 
@@ -95,7 +95,7 @@ class UserService {
 
         const userDTO = new UserDTO(editedUser);
         const tokens = tokenService.generate({ ...userDTO });
-        await tokenService.save(userDTO.id, tokens.refreshToken);
+        await tokenService.save(userDTO._id, tokens.refreshToken);
 
         return {
           ...tokens,

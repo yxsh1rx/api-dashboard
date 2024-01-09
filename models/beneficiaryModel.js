@@ -14,12 +14,12 @@ const BeneficiarySchema = new Schema(
     },
     sex: { type: String, enum: ['Male', 'Female'], required: true },
     birthdate: { type: Date, required: true },
-    location: { type: String },
+    location: { type: String, required: true },
     phone: { type: String },
     disability: { type: Boolean, default: false },
     disaggregation: {
       type: String,
-      enum: ['Refugee', 'Local'],
+      enum: ['Refugee', 'Local', 'Specialist'],
       default: 'Refugee'
     },
     support: { type: Array },

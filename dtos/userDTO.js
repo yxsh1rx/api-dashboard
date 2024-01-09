@@ -1,16 +1,16 @@
 module.exports = class UserDTO {
-  id;
+  _id;
   username;
   fullName;
-  locations;
+  areas;
   role;
   status;
 
   constructor(model) {
-    this.id = model._id;
+    this._id = model._id;
     this.username = model.username;
     this.fullName = model.fullName;
-    this.locations = model.locations;
+    this.areas = model.areas;
     this.role = model.role;
     this.status = model.status;
   }
